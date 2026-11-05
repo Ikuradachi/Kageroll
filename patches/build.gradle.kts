@@ -1,14 +1,14 @@
-group = "app.template"
+group = "io.github.ikuradachi.kageroll"
 
 patches {
     // TODO: Update this section with your project details.
     about {
-        name = "UserXYZ Patches"
-        description = "Patches for apps I like"
-        source = "git@github.com:UserXYZ/morphe-patches.git"
-        author = "Awesome dev"
-        contact = "na"
-        website = "na"
+        name = "Kageroll"
+        description = "Patches for the Crunchyroll Android app, for use with Morphe."
+        source = "git@github.com:Ikuradachi/Kageroll.git"
+        author = "Ikuradachi"
+        contact = "https://github.com/Ikuradachi/Kageroll/issues"
+        website = "https://github.com/Ikuradachi/Kageroll"
         license = "GPLv3"
     }
 }

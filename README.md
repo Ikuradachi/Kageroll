@@ -1,18 +1,18 @@
-# 👋🧩 Morphe Patches template
+# Kageroll
 
-Template repository for Morphe Patches.
+Crunchyroll patches for use with Morphe.
 
 ## ❓ About
 
-Patches for apps I like.
+Kageroll focuses exclusively on patches for the Crunchyroll Android app. Patch requests and bug reports should relate to Crunchyroll.
 
-<!-- TODO: Update this about section with a brief introduction/summary about this repo and what it offers. -->
+This is an independent project, not affiliated with or endorsed by Crunchyroll or the Morphe project. Available patches and supported app versions are listed below when published.
 
 ### How to use these patches
 
-Click the button below, or manually add this repo url to Morphe Manager: https://github.com/xyz-user/xyz-patches
+Click the button below, or manually add this repo URL to Morphe Manager: https://github.com/Ikuradachi/Kageroll
 
-<a href="https://morphe.software/add-source?github=xyz-user/xyz-patches">
+<a href="https://morphe.software/add-source?github=Ikuradachi/Kageroll">
   <img src=".github/assets/add-to-morphe.svg" alt="Add to Morphe" height="48">
 </a>
 
@@ -100,4 +100,4 @@ See the [Morphe documentation](https://github.com/MorpheApp/morphe-documentation
 
 ## 📜 License
 
-UserXYZ Patches are licensed under the [GNU General Public License v3.0](LICENSE)
+Kageroll is licensed under the [GNU General Public License v3.0](LICENSE). See [NOTICE](NOTICE) for naming and branding restrictions.
