@@ -49,6 +49,12 @@ Click the button below, or manually add this repo URL to Morphe Manager: https:/
 
 See the [Morphe documentation](https://github.com/MorpheApp/morphe-documentation) for more information.
 
+## 🙏 Credits
+
+Thanks to [MeGaNeKoS](https://github.com/MeGaNeKoS) and the contributors to [CR-Unblocker](https://github.com/MeGaNeKoS/CR-Unblocker) for their work on proxy-based access to region-restricted Crunchyroll content, which inspired Kageroll's proxy token requests patch.
+
+Kageroll was also inspired by Yomiroll, a former extension for Aniyomi. Thanks to its creators and contributors.
+
 ## 📜 License
 
 Kageroll is licensed under the [GNU General Public License v3.0](LICENSE). See [NOTICE](NOTICE) for naming and branding restrictions.
