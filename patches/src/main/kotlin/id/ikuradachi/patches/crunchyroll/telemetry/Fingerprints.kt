@@ -67,8 +67,7 @@ object DatadogSetupFingerprint : Fingerprint(
     filters = listOf(
         string("environmentDomain"),
         opcode(Opcode.IGET_BOOLEAN),
-        opcode(Opcode.CONST_16, InstructionLocation.MatchAfterImmediately()),
-        opcode(Opcode.IF_EQZ, InstructionLocation.MatchAfterImmediately()),
+        opcode(Opcode.IF_EQZ, InstructionLocation.MatchAfterWithin(1)),
         string("trackingConsent"),
         string("_dd.sdk_core.default"),
         string("rum-pipeline"),
