@@ -65,14 +65,18 @@ val disableTelemetryPatch = bytecodePatch(
             val instructions = implementation.instructions
             val condition = match.instructionMatches[1]
             val register = condition.getInstruction<TwoRegisterInstruction>().registerA
-            val branch = instructions[match.instructionMatches[3].index] as BuilderInstruction21t
+            val branch = instructions[match.instructionMatches[2].index] as BuilderInstruction21t
             val target = branch.target.location.index
+            val targetOpcodes = instructions.drop(target).take(6).map { it.opcode }
+            val validBranch = targetOpcodes == listOf(
+                Opcode.CONST_4, Opcode.CONST_4, Opcode.NEW_INSTANCE,
+                Opcode.INVOKE_DIRECT, Opcode.MOVE_OBJECT, Opcode.SPUT_OBJECT,
+            ) || targetOpcodes.take(5) == listOf(
+                Opcode.CONST_16, Opcode.NEW_INSTANCE,
+                Opcode.INVOKE_DIRECT, Opcode.MOVE_OBJECT, Opcode.SPUT_OBJECT,
+            )
             check(
-                implementation.registerCount == 38 && register in 0..15 && branch.registerA == register &&
-                    instructions.subList(target, target + 6).map { it.opcode } == listOf(
-                        Opcode.CONST_4, Opcode.CONST_4, Opcode.NEW_INSTANCE,
-                        Opcode.INVOKE_DIRECT, Opcode.MOVE_OBJECT, Opcode.SPUT_OBJECT,
-                    ),
+                implementation.registerCount in setOf(38, 63) && register in 0..15 && branch.registerA == register && validBranch,
             ) { "Unexpected Datadog disabled branch" }
             match.method.replaceInstruction(condition.index, "const/4 v$register, 0x0")
         }
