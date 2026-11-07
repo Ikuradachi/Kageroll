@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/Ikuradachi/Kageroll/compare/v1.2.0...v1.3.0) (2026-11-07)
+
+### ✨ New Features
+
+* unlock and expand playback speed controls ([3c966bc](https://github.com/Ikuradachi/Kageroll/commit/3c966bc3ad3992dbc4c0f56e51bf64085fc950a0))
+
 ## [1.3.0-dev.1](https://github.com/Ikuradachi/Kageroll/compare/v1.2.0...v1.3.0-dev.1) (2026-11-07)
 
 ### ✨ New Features
