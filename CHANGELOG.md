@@ -1,3 +1,9 @@
+## [1.4.0-dev.1](https://github.com/Ikuradachi/Kageroll/compare/v1.3.0...v1.4.0-dev.1) (2026-11-09)
+
+### ✨ New Features
+
+* add performance bloat and background service patches ([536107c](https://github.com/Ikuradachi/Kageroll/commit/536107c63d54d2e3e8911a9aac9eb24e911eba10))
+
 ## [1.3.0](https://github.com/Ikuradachi/Kageroll/compare/v1.2.0...v1.3.0) (2026-11-07)
 
 ### ✨ New Features
