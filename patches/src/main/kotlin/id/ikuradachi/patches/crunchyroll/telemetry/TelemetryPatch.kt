@@ -14,8 +14,8 @@ import id.ikuradachi.patches.crunchyroll.shared.Constants.COMPATIBILITY_CRUNCHYR
 @Suppress("unused")
 val disableTelemetryPatch = bytecodePatch(
     name = "Disable telemetry",
-    description = "Blocks Segment and Mux events, disables Firebase Analytics after consent updates, denies automatic Crashlytics uploads and selects disabled Datadog setup. SDK initialization, queued Segment events, local metadata, Firebase collection before consent updates, local crash recording and explicit report submission remain; independent Braze and Singular behavior is unchanged.",
-    default = false,
+    description = "Blocks Segment and Mux events, disables periodic telemetry loops and flush timers (Mux 1000ms playback poll, Segment 30s flush, Braze push flush alarms, Datadog upload thread), disables Firebase Analytics after consent updates, denies automatic Crashlytics uploads and selects disabled Datadog setup.",
+    default = true,
 ) {
     compatibleWith(COMPATIBILITY_CRUNCHYROLL)
 
@@ -80,5 +80,25 @@ val disableTelemetryPatch = bytecodePatch(
             ) { "Unexpected Datadog disabled branch" }
             match.method.replaceInstruction(condition.index, "const/4 v$register, 0x0")
         }
+
+        // Target 12: Mux 1000ms fixed delay scheduled polling loop
+        val muxMatch = MuxEventQueue1000msTimerFingerprint.matchAll(1..1).single()
+        val scheduleCall = muxMatch.instructionMatches.last()
+        muxMatch.method.addInstruction(scheduleCall.index, "return-void")
+
+        // Target 13: Segment 30-second recurring flush gate (force false)
+        SegmentShouldFlushFingerprint.matchAll(1..1).single().method.addInstructions(
+            0,
+            """
+                const/4 v0, 0x0
+                return v0
+            """.trimIndent(),
+        )
+
+        // Target 14: Braze AlarmManager-scheduled push delivery flush receiver
+        BrazeFlushReceiverFingerprint.matchAll(1..1).single().method.addInstruction(0, "return-void")
+
+        // Target 15: Datadog continuous in-memory upload thread starter
+        DatadogUploadSchedulerStartFingerprint.matchAll(1..1).single().method.addInstruction(0, "return-void")
     }
 }
