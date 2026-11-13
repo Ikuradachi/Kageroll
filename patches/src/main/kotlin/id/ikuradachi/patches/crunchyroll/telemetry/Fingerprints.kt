@@ -2,6 +2,7 @@ package id.ikuradachi.patches.crunchyroll.telemetry
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.InstructionLocation
+import app.morphe.patcher.anyInstruction
 import app.morphe.patcher.fieldAccess
 import app.morphe.patcher.literal
 import app.morphe.patcher.methodCall
@@ -68,7 +69,10 @@ object DatadogSetupFingerprint : Fingerprint(
     returnType = "V",
     filters = listOf(
         string("environmentDomain"),
-        opcode(Opcode.IGET_BOOLEAN),
+        anyInstruction(
+            opcode(Opcode.IGET_BOOLEAN),
+            opcode(Opcode.MOVE_RESULT),
+        ),
         opcode(Opcode.IF_EQZ, InstructionLocation.MatchAfterWithin(1)),
         string("trackingConsent"),
         string("_dd.sdk_core.default"),

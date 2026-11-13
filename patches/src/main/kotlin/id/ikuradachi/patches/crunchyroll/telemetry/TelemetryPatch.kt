@@ -7,7 +7,6 @@ import app.morphe.patcher.patch.bytecodePatch
 import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.builder.instruction.BuilderInstruction21t
 import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
-import com.android.tools.smali.dexlib2.iface.instruction.TwoRegisterInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.formats.Instruction35c
 import id.ikuradachi.patches.crunchyroll.shared.Constants.COMPATIBILITY_CRUNCHYROLL
 
@@ -64,7 +63,7 @@ val disableTelemetryPatch = bytecodePatch(
             val implementation = requireNotNull(match.method.implementation)
             val instructions = implementation.instructions
             val condition = match.instructionMatches[1]
-            val register = condition.getInstruction<TwoRegisterInstruction>().registerA
+            val register = condition.getInstruction<OneRegisterInstruction>().registerA
             val branch = instructions[match.instructionMatches[2].index] as BuilderInstruction21t
             val target = branch.target.location.index
             val targetOpcodes = instructions.drop(target).take(6).map { it.opcode }
@@ -74,6 +73,9 @@ val disableTelemetryPatch = bytecodePatch(
             ) || targetOpcodes.take(5) == listOf(
                 Opcode.CONST_16, Opcode.NEW_INSTANCE,
                 Opcode.INVOKE_DIRECT, Opcode.MOVE_OBJECT, Opcode.SPUT_OBJECT,
+            ) || targetOpcodes.take(4) == listOf(
+                Opcode.NEW_INSTANCE, Opcode.INVOKE_DIRECT,
+                Opcode.MOVE_OBJECT, Opcode.SPUT_OBJECT,
             )
             check(
                 implementation.registerCount in setOf(38, 63) && register in 0..15 && branch.registerA == register && validBranch,

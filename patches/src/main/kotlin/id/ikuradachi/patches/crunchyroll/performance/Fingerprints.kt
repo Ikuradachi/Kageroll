@@ -2,7 +2,6 @@ package id.ikuradachi.patches.crunchyroll.performance
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.fieldAccess
-import app.morphe.patcher.instanceOf
 import app.morphe.patcher.literal
 import app.morphe.patcher.methodCall
 import app.morphe.patcher.newInstance
@@ -126,7 +125,6 @@ object DataTransportJobInfoSchedulerFingerprint : Fingerprint(
  */
 object GoogleEngageWorkerDoWorkFingerprint : Fingerprint(
     definingClass = "Lcom/crunchyroll/googleengage/data/GoogleEngageServiceWorker;",
-    name = "a",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     parameters = listOf("L"),
     returnType = "Ljava/lang/Object;",
@@ -142,14 +140,13 @@ object GoogleEngageWorkerDoWorkFingerprint : Fingerprint(
  */
 object ContinueWatchingWorkerDoWorkFingerprint : Fingerprint(
     definingClass = "Lcom/crunchyroll/appwidgets/continuewatching/ContinueWatchingWorker;",
-    name = "a",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     parameters = listOf("L"),
     returnType = "Ljava/lang/Object;",
     filters = listOf(
-        instanceOf("Lcom/crunchyroll/appwidgets/continuewatching/ContinueWatchingWorker\$b;"),
-        newInstance("Lcom/crunchyroll/appwidgets/continuewatching/ContinueWatchingWorker\$b;"),
         string("call to 'resume' before 'invoke' with coroutine"),
+        string("trackInstall"),
+        string("dependencies"),
     ),
 )
 
@@ -171,13 +168,14 @@ object DatadogWorkManagerSchedulerFingerprint : Fingerprint(
 )
 
 /**
- * Matches Datadog UploadWorker.doWork().
+ * Matches Datadog UploadWorker.doWork() (obfuscated as a() in 3.129.1).
  * WorkManager worker executing disk-to-network telemetry batch uploads.
  */
 object DatadogUploadWorkerDoWorkFingerprint : Fingerprint(
     definingClass = "Lcom/datadog/android/core/UploadWorker;",
-    name = "doWork",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    parameters = emptyList(),
+    returnType = "Landroidx/work/",
     filters = listOf(
         string("_dd.sdk.instanceName"),
     ),
@@ -189,8 +187,9 @@ object DatadogUploadWorkerDoWorkFingerprint : Fingerprint(
  */
 object OneTrustConsentLoggingWorkerFingerprint : Fingerprint(
     definingClass = "Lcom/onetrust/otpublishers/headless/cmp/api/OTCMPConsentLoggingWorker;",
-    name = "doWork",
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    parameters = emptyList(),
+    returnType = "Landroidx/work/",
     filters = listOf(
         string("OT_CMP_SDK_LAST_WORKER_ID"),
         string("CPWorker"),

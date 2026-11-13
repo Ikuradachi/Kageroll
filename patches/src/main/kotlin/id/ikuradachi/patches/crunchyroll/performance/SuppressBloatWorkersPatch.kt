@@ -5,11 +5,11 @@ import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
 import id.ikuradachi.patches.crunchyroll.shared.Constants.COMPATIBILITY_CRUNCHYROLL
 
-private const val RETURN_SUCCESS = """
-    new-instance v0, Landroidx/work/n${'$'}a${'$'}c;
-    invoke-direct {v0}, Landroidx/work/n${'$'}a${'$'}c;-><init>()V
+private fun returnSuccessInstructions(resultSuccessType: String) = """
+    new-instance v0, $resultSuccessType
+    invoke-direct {v0}, $resultSuccessType-><init>()V
     return-object v0
-"""
+""".trimIndent()
 
 @Suppress("unused")
 val suppressBloatWorkersPatch = bytecodePatch(
@@ -20,31 +20,35 @@ val suppressBloatWorkersPatch = bytecodePatch(
     compatibleWith(COMPATIBILITY_CRUNCHYROLL)
 
     execute {
+        // Target 10: Datadog WorkManager upload worker execution
+        val datadogUploadMethod = DatadogUploadWorkerDoWorkFingerprint.matchAll(1..1).single().method
+        val returnType = datadogUploadMethod.returnType
+        check(returnType.startsWith("Landroidx/work/") && returnType.endsWith(";")) {
+            "Unexpected WorkManager Result return type: $returnType"
+        }
+        val returnSuccess = returnSuccessInstructions("${returnType.removeSuffix(";")}\$c;")
+
+        datadogUploadMethod.addInstructions(0, returnSuccess)
+
         // Target 7: Google Engage service worker execution
         GoogleEngageWorkerDoWorkFingerprint.matchAll(1..1).single().method.addInstructions(
             0,
-            RETURN_SUCCESS.trimIndent(),
+            returnSuccess,
         )
 
         // Target 8: Continue Watching recurring background worker execution
         ContinueWatchingWorkerDoWorkFingerprint.matchAll(1..1).single().method.addInstructions(
             0,
-            RETURN_SUCCESS.trimIndent(),
+            returnSuccess,
         )
 
         // Target 9: Datadog WorkManager upload worker scheduler
         DatadogWorkManagerSchedulerFingerprint.matchAll(1..1).single().method.addInstruction(0, "return-void")
 
-        // Target 10: Datadog WorkManager upload worker execution
-        DatadogUploadWorkerDoWorkFingerprint.matchAll(1..1).single().method.addInstructions(
-            0,
-            RETURN_SUCCESS.trimIndent(),
-        )
-
         // Target 11: OneTrust CMP consent logging worker execution
         OneTrustConsentLoggingWorkerFingerprint.matchAll(1..1).single().method.addInstructions(
             0,
-            RETURN_SUCCESS.trimIndent(),
+            returnSuccess,
         )
     }
 }
