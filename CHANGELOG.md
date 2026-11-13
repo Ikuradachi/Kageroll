@@ -1,3 +1,9 @@
+## [1.4.0-dev.2](https://github.com/Ikuradachi/Kageroll/compare/v1.4.0-dev.1...v1.4.0-dev.2) (2026-11-13)
+
+### 🐛 Bug Fixes
+
+* support for v3.129.1, broken disabletelemetry and suppressbloatworkers patch ([ee83706](https://github.com/Ikuradachi/Kageroll/commit/ee837064624fc827ac1d012ae6f696b2247035a5))
+
 ## [1.4.0-dev.1](https://github.com/Ikuradachi/Kageroll/compare/v1.3.0...v1.4.0-dev.1) (2026-11-09)
 
 ### ✨ New Features

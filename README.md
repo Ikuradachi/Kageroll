@@ -19,7 +19,7 @@ Click the button below, or manually add this repo URL to Morphe Manager: https:/
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.4.0-dev.1](https://github.com/Ikuradachi/Kageroll/releases/tag/v1.4.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;7 patches total
+> **[v1.4.0-dev.2](https://github.com/Ikuradachi/Kageroll/releases/tag/v1.4.0-dev.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;7 patches total
 <details open>
 <summary>📦 Crunchyroll&nbsp;&nbsp;•&nbsp;&nbsp;7 patches</summary>
 <br>
@@ -28,8 +28,8 @@ Click the button below, or manually add this repo URL to Morphe Manager: https:/
 
 **🎯 Supported versions:**
 
-| 3.127.0 | 3.128.0 |
-| :---: | :---: |
+| 3.127.0 | 3.128.0 | 3.129.1 |
+| :---: | :---: | :---: |
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
